@@ -60,10 +60,8 @@ architecture Behavioral of datapath is
 
     signal constant_9               : STD_LOGIC_VECTOR (23 downto 0);
     signal roll                     : STD_LOGIC;
-    signal unit_digit               : STD_LOGIC_VECTOR (3 downto 0);
-    signal tenth_digit              : STD_LOGIC_VECTOR (3 downto 0);
-    signal seg_unit                 : STD_LOGIC_VECTOR (6 downto 0);
-    signal seg_tenth                : STD_LOGIC_VECTOR (6 downto 0);
+    signal unit_placeholder         : STD_LOGIC_VECTOR (3 downto 0);
+    signal tenth_placeholder        : STD_LOGIC_VECTOR (3 downto 0);
 
     begin
 
@@ -72,10 +70,10 @@ architecture Behavioral of datapath is
         sec_cnt:   counter      generic map (24) port map (clk, reset, c, d, q);
         sec_cmp:   compare      generic map (24) port map (x, constant_9, g, l, e);
 
-    	unit:      Mod10Counter port map (reset, sw, roll, cw(3), open, unit);
-        tenth:     Mod10Counter port map (reset, sw, cw(2), cw(3), roll, Q);
+    	unit:      Mod10Counter port map (reset, sw, roll, cw(3), open, unit_placeholder);
+        tenth:     Mod10Counter port map (reset, sw, cw(2), cw(3), roll, tenth_placeholder);
 
-        UnitSeg:   Hex2Seven    port map (unit_digit, seg_unit);
-        TenthSeg:  Hex2Seven    port map (tenth_digit, seg_tenth);
+        UnitSeg:   Hex2Seven    port map (unit_placeholder, unit_digit);
+        TenthSeg:  Hex2Seven    port map (tenth_placeholder, tenth_digit);
 
 end Behavioral;
